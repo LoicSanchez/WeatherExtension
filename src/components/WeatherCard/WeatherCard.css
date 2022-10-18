@@ -1,0 +1,16 @@
+.weatherCard-body,
+.weatherCard-body-weather-main {
+	font-size: 16px !important;
+}
+.weatherCard-body-temp {
+	font-size: 32px !important;
+}
+.weatherCard-title {
+	font-size: 24px !important;
+}
+.weatherCard-body-weather-main {
+	text-align: center;
+}
+.weatherCard-img-weather {
+	width: 80px;
+}

@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react'
 
 import './WeatherCard.css'
-import { fetchOperationWeatherData, OpenWeatherData } from '../../utils/api'
+import {
+	fetchOperationWeatherData,
+	getWeatherIconSrc,
+	OpenWeatherData,
+	OpenWeatherTempScale,
+} from '../../utils/api'
 
 import {
 	Box,
 	Card,
+	Grid,
 	Button,
 	CardContent,
 	Typography,
@@ -23,7 +29,9 @@ const WeatherCardContainer: React.FC<{
 				<CardActions>
 					{onDelete && (
 						<Button onClick={onDelete} color="secondary">
-							Delete
+							<Typography className="weatherCard-body">
+								Delete
+							</Typography>
 						</Button>
 					)}
 				</CardActions>
@@ -36,13 +44,14 @@ type WeatherCardState = 'loading' | 'error' | 'ready'
 
 const WeatherCard: React.FC<{
 	city: string
+	tempScale: OpenWeatherTempScale
 	onDelete?: () => void
-}> = ({ city, onDelete }) => {
+}> = ({ city, tempScale, onDelete }) => {
 	const [weatherData, setWeatherData] = useState<OpenWeatherData | null>(null)
 	const [cardState, setCardState] = useState<WeatherCardState>('loading')
 
 	useEffect(() => {
-		fetchOperationWeatherData(city)
+		fetchOperationWeatherData(city, tempScale)
 			.then((data) => {
 				//console.log(data)
 				setWeatherData(data)
@@ -52,12 +61,13 @@ const WeatherCard: React.FC<{
 				console.log(err)
 				setCardState('error')
 			})
-	}, [city])
+	}, [city, tempScale])
 
 	if (cardState == 'loading' || cardState == 'error') {
 		return (
 			<WeatherCardContainer onDelete={onDelete}>
-				<Typography variant="body1">
+				<Typography className="weatherCard-title">{city}</Typography>
+				<Typography className="weatherCard-body">
 					{cardState == 'loading'
 						? 'Loading...'
 						: 'Error: could not retrieve weather data'}
@@ -68,13 +78,32 @@ const WeatherCard: React.FC<{
 
 	return (
 		<WeatherCardContainer onDelete={onDelete}>
-			<Typography variant="h5">{weatherData.name}</Typography>
-			<Typography variant="body1">
-				{Math.round(weatherData.main.temp)}
-			</Typography>
-			<Typography variant="body1">
-				Feels like: {Math.round(weatherData.main.feels_like)}
-			</Typography>
+			<Grid container justifyContent="space-between">
+				<Grid item>
+					<Typography className="weatherCard-title">
+						{weatherData.name}
+					</Typography>
+					<Typography className="weatherCard-body-temp">
+						{Math.round(weatherData.main.temp)}
+					</Typography>
+					<Typography className="weatherCard-body">
+						Feels like: {Math.round(weatherData.main.feels_like)}
+					</Typography>
+				</Grid>
+				<Grid item>
+					{weatherData.weather.length > 0 && (
+						<>
+							<img
+								src={getWeatherIconSrc(weatherData.weather[0].icon)}
+								className="weatherCard-img-weather"
+							/>
+							<Typography className="weatherCard-body-weather-main">
+								{weatherData.weather[0].main}
+							</Typography>
+						</>
+					)}
+				</Grid>
+			</Grid>
 		</WeatherCardContainer>
 	)
 }
