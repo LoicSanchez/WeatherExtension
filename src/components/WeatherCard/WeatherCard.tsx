@@ -11,12 +11,12 @@ import {
 import {
 	Box,
 	Card,
-	Grid,
-	Button,
-	CardContent,
-	Typography,
 	CardActions,
-} from '@material-ui/core'
+	CardContent,
+	Button,
+	Grid,
+	Typography,
+} from '@mui/material'
 
 const WeatherCardContainer: React.FC<{
 	children: React.ReactNode

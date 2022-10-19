@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import ReactDOM from 'react-dom'
-import {
-	Card,
-	CardContent,
-	Typography,
-	Grid,
-	TextField,
-	Box,
-	Button,
-	Switch,
-} from '@material-ui/core'
+import { createRoot } from 'react-dom/client'
 import './options.css'
 import '@fontsource/roboto'
 import {
@@ -17,6 +7,11 @@ import {
 	setStoredOptions,
 	LocalStorageOptions,
 } from '../utils/storage'
+
+import CardContent from '@mui/material/CardContent'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import { Grid, Switch, TextField, Box, Card } from '@mui/material'
 
 type FormState = 'ready' | 'saving'
 
@@ -113,6 +108,8 @@ const App: React.FC<{}> = () => {
 	)
 }
 
-const root = document.createElement('div')
-document.body.appendChild(root)
-ReactDOM.render(<App />, root)
+const container = document.createElement('div')
+document.body.appendChild(container)
+
+const root = createRoot(container!)
+root.render(<App />)

@@ -1,7 +1,7 @@
 {
-	"name": "Weather Extension",
+	"name": "Weather Extension (updated)",
 	"description": "Weather Extension in React!",
-	"version": "1.0.0",
+	"version": "2.0.0",
 	"manifest_version": 3,
 	"icons": {
 		"16": "icon.png",

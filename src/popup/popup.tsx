@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import ReactDOM from 'react-dom'
-import { Box, Grid, InputBase, IconButton, Paper } from '@material-ui/core'
-import {
-	Add as AddIcon,
-	Message,
-	PictureInPicture as PictureInPictureIcon,
-} from '@material-ui/icons'
-import './popup.css'
-import WeatherCard from '../components/WeatherCard'
-import 'fontsource-roboto'
+import { createRoot } from 'react-dom/client'
 import {
 	setStoredCities,
 	getStoredCities,
@@ -17,6 +8,14 @@ import {
 	LocalStorageOptions,
 } from '../utils/storage'
 import { Messages } from '../utils/messages'
+import '@fontsource/roboto'
+import './popup.css'
+import WeatherCard from '../components/WeatherCard'
+import { Grid, Box, Paper, IconButton, InputBase } from '@mui/material'
+import {
+	Add as AddIcon,
+	PictureInPicture as PictureInPictureIcon,
+} from '@mui/icons-material'
 
 const App: React.FC<{}> = () => {
 	const [cities, setCities] = useState<string[]>([])
@@ -131,4 +130,6 @@ const App: React.FC<{}> = () => {
 
 const container = document.createElement('div')
 document.body.appendChild(container)
-ReactDOM.render(<App />, container)
+
+const root = createRoot(container!)
+root.render(<App />)
